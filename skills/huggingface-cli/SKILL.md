@@ -1,7 +1,7 @@
 ---
 name: huggingface-cli
 description: "Use the Hugging Face `hf` CLI safely: auth, public/private Hub access, model/dataset/Space discovery, downloads, uploads, repos, cache, jobs, endpoints, webhooks, and troubleshooting. Load when the task names Hugging Face, HF Hub, `hf`, `huggingface-cli`, models/datasets/Spaces on the Hub, or Hub auth/tokens."
-version: 1.0.0
+version: 1.0.1
 author: Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
@@ -40,10 +40,10 @@ If that fails, decide whether auth is actually needed. Public search/info/downlo
 ```bash
 hf models ls --search llama --limit 5 --json
 hf datasets info HuggingFaceFW/fineweb --json
-hf repos ls --json
+hf spaces search "leaderboard" --limit 5 --json
 ```
 
-Use `--format json` where `--json` is not available; use `-q` only when one-ID-per-line output is enough.
+Use `--format json` where `--json` is not available; use `-q` only when one-ID-per-line output is enough. Authenticated inventory such as `hf repos ls --json` requires a token.
 
 ## Install or update
 
@@ -126,6 +126,8 @@ hf datasets ls HuggingFaceFW/fineweb -R --tree -h
 hf datasets parquet cfahlgren1/hub-stats --format json
 hf datasets sql "SELECT COUNT(*) AS rows FROM read_parquet('https://huggingface.co/api/datasets/cfahlgren1/hub-stats/parquet/models/train/0.parquet')" --json
 ```
+
+`hf datasets sql` needs DuckDB available as either the Python package or CLI binary; if it errors, install DuckDB through the user's approved package manager before retrying.
 
 Spaces:
 
@@ -226,8 +228,11 @@ hf repos settings username/my-model --gated auto
 hf repos settings username/my-space --repo-type space --protected
 
 # Branches/tags.
-hf repos branch username/my-model
-hf repos tag username/my-model
+hf repos branch create username/my-model dev
+hf repos branch delete username/my-model dev
+hf repos tag list username/my-model
+hf repos tag create username/my-model v1.0
+hf repos tag delete username/my-model v1.0
 
 # Duplicate or move.
 hf repos duplicate openai/gdpval --repo-type dataset
@@ -277,7 +282,7 @@ Jobs run commands on Hugging Face infrastructure. Verify cost/hardware before la
 ```bash
 hf jobs hardware
 hf jobs run python:3.12 python -c 'print("Hello from HF Jobs")'
-hf jobs uv ./script.py
+hf jobs uv run ./script.py
 hf jobs ps --json
 hf jobs inspect <job_id> --json
 hf jobs logs <job_id>
@@ -290,8 +295,9 @@ Inference Endpoints are managed services and can incur cost. List/describe befor
 
 ```bash
 hf endpoints ls --json
-hf endpoints catalog --help
-hf endpoints deploy my-endpoint --repo gpt2 --framework pytorch
+hf endpoints catalog list --json
+hf endpoints catalog deploy --repo gpt2 --name my-endpoint
+hf endpoints deploy my-endpoint --repo gpt2 --framework pytorch --accelerator cpu --instance-size x4 --instance-type intel-icl --region us-east-1 --vendor aws
 hf endpoints describe my-endpoint --json
 hf endpoints update my-endpoint --min-replica 2
 hf endpoints pause my-endpoint
@@ -314,9 +320,9 @@ Discussions and PRs:
 
 ```bash
 hf discussions list username/my-model
-hf discussions create username/my-model --title "Fix config" --description "..."
+hf discussions create username/my-model --title "Fix config" --body "..."
 hf discussions diff username/my-model <discussion_or_pr_num>
-hf discussions comment username/my-model <num> --comment "Looks good"
+hf discussions comment username/my-model <num> --body "Looks good"
 hf discussions merge username/my-model <pr_num>
 ```
 
@@ -324,7 +330,7 @@ Webhooks:
 
 ```bash
 hf webhooks ls --json
-hf webhooks create --url https://example.com/hook --watch model:bert-base-uncased
+hf webhooks create --url https://example.com/hook --watch model:bert-base-uncased --domain repo
 hf webhooks info <webhook_id> --json
 hf webhooks disable <webhook_id>
 hf webhooks enable <webhook_id>
