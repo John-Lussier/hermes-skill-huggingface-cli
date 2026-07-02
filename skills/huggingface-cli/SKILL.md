@@ -47,20 +47,16 @@ Use `--format json` where `--json` is not available; use `-q` only when one-ID-p
 
 ## Install or update
 
-Prefer an existing `hf`. If missing:
+Prefer an existing `hf`. If it is missing, do not bootstrap by piping remote installers into a shell from inside an agent session. Send the user to the official CLI docs or use an environment-approved package manager/install path they already trust: https://huggingface.co/docs/huggingface_hub/en/guides/cli
+
+After installation, restart the shell if PATH changed and verify:
 
 ```bash
-# macOS/Linux standalone installer from Hugging Face
-curl -LsSf https://hf.co/cli/install.sh | bash
-
-# Windows PowerShell
-powershell -ExecutionPolicy ByPass -c "irm https://hf.co/cli/install.ps1 | iex"
-
-# Python environment alternative
-python -m pip install -U huggingface_hub
+hf version
+hf --help
 ```
 
-Then restart the shell if PATH changed and verify with `hf version`. Use `hf update` for the standalone CLI when available.
+Use `hf update` for the standalone CLI when available.
 
 ## Authentication: logged in, not logged in, and no secrets
 
