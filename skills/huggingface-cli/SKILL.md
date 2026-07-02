@@ -1,7 +1,7 @@
 ---
 name: huggingface-cli
 description: "Use the Hugging Face `hf` CLI safely: auth, public/private Hub access, model/dataset/Space discovery, downloads, uploads, repos, cache, jobs, endpoints, webhooks, and troubleshooting. Load when the task names Hugging Face, HF Hub, `hf`, `huggingface-cli`, models/datasets/Spaces on the Hub, or Hub auth/tokens."
-version: 1.0.2
+version: 1.0.3
 author: Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
@@ -16,6 +16,13 @@ metadata:
 Use this when interacting with Hugging Face Hub from a terminal: model/dataset/Space discovery, authenticated private/gated access, repo/file management, uploads/downloads, cache cleanup, Spaces, Jobs, Inference Endpoints, webhooks, buckets, and collections.
 
 The modern command is `hf`. `huggingface-cli` may exist as an older/deprecated alias; prefer `hf` and run `hf --help` on the target machine because subcommands evolve quickly.
+
+## What is the Hugging Face Hub?
+
+The Hub is Hugging Face's AI collaboration platform: Git-backed repositories for models, datasets, and Spaces, plus Storage Buckets for mutable object storage. It also includes org/team access, tokens, discussions and PRs, collections, webhooks, Jobs, Inference Endpoints, and security/compliance features. Use the Hub docs for product concepts and the CLI docs for exact command syntax:
+
+- Hub docs: https://huggingface.co/docs/hub/en/index
+- CLI docs: https://huggingface.co/docs/huggingface_hub/en/guides/cli
 
 ## First moves
 
