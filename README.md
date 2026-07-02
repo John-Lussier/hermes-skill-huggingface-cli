@@ -9,7 +9,7 @@ No secrets belong in this repo. The skill teaches agents to avoid printing Huggi
 Direct install:
 
 ```bash
-hermes skills install https://raw.githubusercontent.com/John-Lussier/hermes-skill-huggingface-cli/v1.0.1/skills/huggingface-cli/SKILL.md --category mlops
+hermes skills install https://raw.githubusercontent.com/John-Lussier/hermes-skill-huggingface-cli/v1.0.2/skills/huggingface-cli/SKILL.md --category mlops
 ```
 
 Or add this repo as a tap:

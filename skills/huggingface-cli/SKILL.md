@@ -1,7 +1,7 @@
 ---
 name: huggingface-cli
 description: "Use the Hugging Face `hf` CLI safely: auth, public/private Hub access, model/dataset/Space discovery, downloads, uploads, repos, cache, jobs, endpoints, webhooks, and troubleshooting. Load when the task names Hugging Face, HF Hub, `hf`, `huggingface-cli`, models/datasets/Spaces on the Hub, or Hub auth/tokens."
-version: 1.0.1
+version: 1.0.2
 author: Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
@@ -282,7 +282,7 @@ Jobs run commands on Hugging Face infrastructure. Verify cost/hardware before la
 ```bash
 hf jobs hardware
 hf jobs run python:3.12 python -c 'print("Hello from HF Jobs")'
-hf jobs uv run ./script.py
+hf jobs uv --help
 hf jobs ps --json
 hf jobs inspect <job_id> --json
 hf jobs logs <job_id>
@@ -290,6 +290,8 @@ hf jobs stats <job_id>
 hf jobs cancel <job_id>
 hf jobs scheduled --help
 ```
+
+UV-script jobs use the `run` subcommand under `hf jobs uv`; review the script and inline dependencies before launching because jobs run on Hugging Face infrastructure and can incur cost.
 
 Inference Endpoints are managed services and can incur cost. List/describe before changing; pause/scale-to-zero when idle.
 
